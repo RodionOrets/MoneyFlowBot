@@ -16,13 +16,17 @@ public abstract class MoneyFlowActionProcessor {
     @Qualifier("moneyFlowBot")
     private MoneyFlowBot moneyFlowBot;
 
-    protected Update update;
-
-    public abstract void process();
+    private Update update;
 
     public void setUpdate(Update update) {
         this.update = update;
     }
+
+    protected Update getUpdate() {
+        return update;
+    }
+
+    public abstract void process();
 
     protected <T extends Serializable, ApiMethod extends BotApiMethod<T>> void executeApiMethod(ApiMethod apiMethod) {
         try {
