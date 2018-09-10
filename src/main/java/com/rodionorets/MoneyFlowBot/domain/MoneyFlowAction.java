@@ -16,4 +16,20 @@ public class MoneyFlowAction {
     private BigDecimal amount;
 
     private String actionType;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Integer getTelegramUserId() {
+        return telegramUserId;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public String getActionType() {
+        return actionType;
+    }
 }
