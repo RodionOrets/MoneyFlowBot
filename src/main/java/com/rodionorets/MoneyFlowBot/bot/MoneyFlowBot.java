@@ -11,15 +11,18 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 @Component("moneyFlowBot")
 public class MoneyFlowBot extends TelegramLongPollingBot {
 
-    @Autowired
-    @Qualifier("moneyFlowActionProvider")
-    private MoneyFlowActionProcessorProvider moneyFlowActionProcessorProvider;
+    private final MoneyFlowActionProcessorProvider moneyFlowActionProcessorProvider;
 
     @Value("${bot.username}")
     private String botUsername;
 
     @Value("${bot.token}")
     private String botToken;
+
+    @Autowired
+    public MoneyFlowBot(@Qualifier("moneyFlowActionProvider") MoneyFlowActionProcessorProvider moneyFlowActionProcessorProvider) {
+        this.moneyFlowActionProcessorProvider = moneyFlowActionProcessorProvider;
+    }
 
     @Override
     public String getBotUsername() {
