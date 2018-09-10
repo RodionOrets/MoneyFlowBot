@@ -31,11 +31,10 @@ public class GetBalanceActionProcessor extends MoneyFlowActionProcessor {
 
         var userBalance = userActions.stream()
                 .filter(action -> action.getActionType().equals(ActionTypes.INCOME) || action.getActionType().equals(ActionTypes.EXPENSE))
-                .map(MoneyFlowAction::getAmount)
-                .mapToDouble(BigDecimal::doubleValue)
+                .mapToDouble(action -> action.getAmount().doubleValue())
                 .sum();
 
-        String message = "Your balance is " + userBalance;
+        String message = "Your total balance is " + userBalance;
 
         SendMessage sendMessage = new SendMessage()
                 .setText(message);
