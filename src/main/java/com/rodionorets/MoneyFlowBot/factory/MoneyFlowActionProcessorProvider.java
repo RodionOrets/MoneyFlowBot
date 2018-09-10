@@ -13,7 +13,7 @@ import org.telegram.telegrambots.api.objects.Update;
 import static com.rodionorets.MoneyFlowBot.util.QueriesAndProcessorNames.General.UNKNOWN_ACTION_PROCESSOR_NAME;
 
 @Service("moneyFlowActionProvider")
-public class MoneyFlowActionProvider {
+public class MoneyFlowActionProcessorProvider {
 
     @Autowired
     private ApplicationContext applicationContext;
@@ -26,7 +26,7 @@ public class MoneyFlowActionProvider {
     @Qualifier("processorNameResolver")
     private ProcessorNameResolver processorNameResolver;
 
-    public MoneyFlowActionProcessor getCommand(Update update) {
+    public MoneyFlowActionProcessor getProcessor(Update update) {
         var processor = resolveFromContext(UNKNOWN_ACTION_PROCESSOR_NAME, MoneyFlowActionProcessor.class);
 
         if (update.hasInlineQuery()) {

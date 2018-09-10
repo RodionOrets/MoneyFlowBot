@@ -1,6 +1,6 @@
 package com.rodionorets.MoneyFlowBot.bot;
 
-import com.rodionorets.MoneyFlowBot.factory.MoneyFlowActionProvider;
+import com.rodionorets.MoneyFlowBot.factory.MoneyFlowActionProcessorProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +13,7 @@ public class MoneyFlowBot extends TelegramLongPollingBot {
 
     @Autowired
     @Qualifier("moneyFlowActionProvider")
-    private MoneyFlowActionProvider moneyFlowActionProvider;
+    private MoneyFlowActionProcessorProvider moneyFlowActionProcessorProvider;
 
     @Value("${bot.username}")
     private String botUsername;
@@ -33,6 +33,6 @@ public class MoneyFlowBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        moneyFlowActionProvider.getCommand(update).process();
+        moneyFlowActionProcessorProvider.getProcessor(update).process();
     }
 }
