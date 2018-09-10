@@ -16,8 +16,12 @@ import java.util.Collection;
 @Service(QueriesAndProcessorNames.Balance.GET_BALANCE_ACTION_PROCESSOR_NAME)
 public class GetBalanceActionProcessor extends MoneyFlowActionProcessor {
 
+    private final MoneyFlowActionsRepository moneyFlowActionsRepository;
+
     @Autowired
-    private MoneyFlowActionsRepository moneyFlowActionsRepository;
+    public GetBalanceActionProcessor(MoneyFlowActionsRepository moneyFlowActionsRepository) {
+        this.moneyFlowActionsRepository = moneyFlowActionsRepository;
+    }
 
     @Override
     public void process() {
