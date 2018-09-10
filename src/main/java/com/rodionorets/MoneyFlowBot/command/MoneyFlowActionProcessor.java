@@ -1,6 +1,7 @@
 package com.rodionorets.MoneyFlowBot.command;
 
 import com.rodionorets.MoneyFlowBot.bot.MoneyFlowBot;
+import com.rodionorets.MoneyFlowBot.util.telegram.ApiMethodExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.telegram.telegrambots.api.methods.BotApiMethod;
@@ -13,27 +14,23 @@ import java.io.Serializable;
 public abstract class MoneyFlowActionProcessor {
 
     @Autowired
-    @Qualifier("moneyFlowBot")
-    private MoneyFlowBot moneyFlowBot;
+    @Qualifier("apiMethodExecutor")
+    private ApiMethodExecutor apiMethodExecutor;
 
     private Update update;
-
-    public void setUpdate(Update update) {
-        this.update = update;
-    }
 
     protected Update getUpdate() {
         return update;
     }
 
-    public abstract void process();
-
-    protected <T extends Serializable, ApiMethod extends BotApiMethod<T>> void executeApiMethod(ApiMethod apiMethod) {
-        try {
-            moneyFlowBot.execute(apiMethod);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
+    public ApiMethodExecutor getApiMethodExecutor() {
+        return apiMethodExecutor;
     }
 
+    public abstract void process();
+
+    public MoneyFlowActionProcessor withUpdate(Update update) {
+        this.update = update;
+        return this;
+    }
 }
