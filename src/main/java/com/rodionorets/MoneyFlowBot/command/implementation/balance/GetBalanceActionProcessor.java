@@ -2,16 +2,11 @@ package com.rodionorets.MoneyFlowBot.command.implementation.balance;
 
 import com.rodionorets.MoneyFlowBot.command.MoneyFlowActionProcessor;
 import com.rodionorets.MoneyFlowBot.domain.ActionTypes;
-import com.rodionorets.MoneyFlowBot.domain.MoneyFlowAction;
 import com.rodionorets.MoneyFlowBot.repository.MoneyFlowActionsRepository;
-import com.rodionorets.MoneyFlowBot.util.QueriesAndProcessorNames;
+import com.rodionorets.MoneyFlowBot.util.moneyflowbot.QueriesAndProcessorNames;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
-import org.telegram.telegrambots.api.objects.Update;
-
-import java.math.BigDecimal;
-import java.util.Collection;
 
 @Service(QueriesAndProcessorNames.Balance.GET_BALANCE_ACTION_PROCESSOR_NAME)
 public class GetBalanceActionProcessor extends MoneyFlowActionProcessor {
@@ -39,7 +34,7 @@ public class GetBalanceActionProcessor extends MoneyFlowActionProcessor {
         SendMessage sendMessage = new SendMessage()
                 .setText(message);
 
-        executeApiMethod(sendMessage);
+        getApiMethodExecutor().executeApiMethod(sendMessage);
     }
 
 }

@@ -2,14 +2,11 @@ package com.rodionorets.MoneyFlowBot.command.implementation.expenses;
 
 import com.rodionorets.MoneyFlowBot.command.MoneyFlowActionProcessor;
 import com.rodionorets.MoneyFlowBot.domain.ActionTypes;
-import com.rodionorets.MoneyFlowBot.domain.MoneyFlowAction;
 import com.rodionorets.MoneyFlowBot.repository.MoneyFlowActionsRepository;
-import com.rodionorets.MoneyFlowBot.util.QueriesAndProcessorNames;
+import com.rodionorets.MoneyFlowBot.util.moneyflowbot.QueriesAndProcessorNames;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
-
-import java.math.BigDecimal;
 
 @Service(QueriesAndProcessorNames.Expenses.GET_EXPENSES_ACTION_PROCESSOR_NAME)
 public class GetExpensesActionProcessor extends MoneyFlowActionProcessor {
@@ -36,7 +33,7 @@ public class GetExpensesActionProcessor extends MoneyFlowActionProcessor {
 
         SendMessage sendMessage = new SendMessage().setText(message);
 
-        executeApiMethod(sendMessage);
+        getApiMethodExecutor().executeApiMethod(sendMessage);
     }
 
 }
