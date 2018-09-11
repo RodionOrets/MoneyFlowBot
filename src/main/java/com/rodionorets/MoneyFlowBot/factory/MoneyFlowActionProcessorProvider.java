@@ -37,19 +37,19 @@ public class MoneyFlowActionProcessorProvider {
         } else if (update.hasMessage()) {
             return null;
         } else {
-            return resolveFromContext(UNKNOWN_ACTION_PROCESSOR_NAME, MoneyFlowActionProcessor.class);
+            return resolveProcessorFromContext(UNKNOWN_ACTION_PROCESSOR_NAME);
         }
     }
 
     private MoneyFlowActionProcessor getProcessorForUpdateWithInlineQuery(Update update) {
         var query = update.getInlineQuery().getQuery();
         var processorBeanName = processorNameResolver.resolveByQuery(query);
-        return resolveFromContext(processorBeanName, MoneyFlowActionProcessor.class)
+        return resolveProcessorFromContext(processorBeanName)
                 .withUpdate(update);
     }
 
-    private <T> T resolveFromContext(String beanName, Class<T> type) {
-        return type.cast(applicationContext.getAutowireCapableBeanFactory().getBean(beanName));
+    private MoneyFlowActionProcessor resolveProcessorFromContext(String processorBeanName) {
+        return MoneyFlowActionProcessor.class
+                .cast(applicationContext.getAutowireCapableBeanFactory().getBean(processorBeanName));
     }
-
 }
