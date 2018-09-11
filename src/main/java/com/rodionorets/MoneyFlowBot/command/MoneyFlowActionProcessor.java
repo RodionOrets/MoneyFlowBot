@@ -23,14 +23,14 @@ public abstract class MoneyFlowActionProcessor {
         return update;
     }
 
-    public ApiMethodExecutor getApiMethodExecutor() {
-        return apiMethodExecutor;
-    }
-
-    public abstract void process();
-
     public MoneyFlowActionProcessor withUpdate(Update update) {
         this.update = update;
         return this;
     }
+
+    protected <T extends Serializable, ApiMethod extends BotApiMethod<T>> void executeApiMethod(ApiMethod method) {
+        apiMethodExecutor.executeApiMethod(method);
+    }
+
+    public abstract void process();
 }

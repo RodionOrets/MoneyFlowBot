@@ -33,7 +33,7 @@ public class GetIncomesActionProcessor extends MoneyFlowActionProcessor {
 
         SendMessage sendMessage = new SendMessage().setText(message);
 
-        getApiMethodExecutor().executeApiMethod(sendMessage);
+        executeApiMethod(sendMessage);
     }
 
 }
