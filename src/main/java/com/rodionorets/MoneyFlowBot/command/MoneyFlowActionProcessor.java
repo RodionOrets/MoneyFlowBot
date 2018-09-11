@@ -17,11 +17,7 @@ public abstract class MoneyFlowActionProcessor {
     @Qualifier("apiMethodExecutor")
     private ApiMethodExecutor apiMethodExecutor;
 
-    private Update update;
-
-    protected Update getUpdate() {
-        return update;
-    }
+    protected Update update;
 
     public MoneyFlowActionProcessor withUpdate(Update update) {
         this.update = update;

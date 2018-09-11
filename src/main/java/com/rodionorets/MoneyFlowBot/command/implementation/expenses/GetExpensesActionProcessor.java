@@ -20,7 +20,6 @@ public class GetExpensesActionProcessor extends MoneyFlowActionProcessor {
 
     @Override
     public void process() {
-        var update = getUpdate();
         var telegramUserId = update.getInlineQuery().getFrom().getId();
         var userActions = moneyFlowActionsRepository.findAllByTelegramUserId(telegramUserId);
 
