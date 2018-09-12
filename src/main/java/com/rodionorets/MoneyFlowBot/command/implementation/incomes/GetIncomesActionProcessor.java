@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 
+import java.util.List;
+
 @Service(QueriesAndProcessorNames.Incomes.GET_INCOMES_ACTION_PROCESSOR_NAME)
 public class GetIncomesActionProcessor extends MoneyFlowActionProcessor {
 
@@ -21,12 +23,12 @@ public class GetIncomesActionProcessor extends MoneyFlowActionProcessor {
     @Override
     public void process() {
         var telegramUserId = update.getInlineQuery().getFrom().getId();
-        var userActions = moneyFlowActionsRepository.findAllByTelegramUserId(telegramUserId);
 
-        var totalUserIncomeAmount = userActions.stream()
-                .filter(action -> action.getActionType().equals(ActionTypes.INCOME))
-                .mapToDouble(action -> action.getAmount().doubleValue())
-                .sum();
+        var totalUserIncomeAmount =
+                moneyFlowActionsRepository.findAllByTelegramUserIdAndActions(telegramUserId, List.of(ActionTypes.INCOME))
+                        .stream()
+                        .mapToDouble(action -> action.getAmount().doubleValue())
+                        .sum();
 
         String message = "Your total income amount is " + totalUserIncomeAmount;
 

@@ -28,7 +28,23 @@ public class GetBalanceActionProcessor extends MoneyFlowActionProcessor {
                 .mapToDouble(action -> action.getAmount().doubleValue())
                 .sum();
 
-        String message = "Your total balance is " + userBalance;
+        var userDebtsStream = userActions.stream()
+                .filter(action -> action.getActionType().equals(ActionTypes.INCOMING_DEBT) || action.getActionType().equals(ActionTypes.OUTGOING_DEBT));
+
+        var incomingDebtsSum = userDebtsStream
+                .filter(action -> action.getActionType().equals(ActionTypes.INCOMING_DEBT))
+                .mapToDouble(action -> action.getAmount().doubleValue())
+                .sum();
+
+        var outgoingDebtsSum = userDebtsStream
+                .filter(action -> action.getActionType().equals(ActionTypes.OUTGOING_DEBT))
+                .mapToDouble(action -> action.getAmount().doubleValue())
+                .sum();
+
+        String message =
+                "Your total balance is: " + userBalance +
+                "\nAmount of your incoming debts: " + incomingDebtsSum +
+                "\nAmount of your outgoing debts: " + outgoingDebtsSum;
 
         SendMessage sendMessage = new SendMessage()
                 .setText(message);
