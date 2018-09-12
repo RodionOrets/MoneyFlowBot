@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.Collection;
 
-// TODO(6): ASAP - find ways to avoid Impl and this class at all
 public class MoneyFlowActionsRepositoryImpl implements CustomMoneyFlowActionsRepository {
 
     private final MongoTemplate mongoTemplate;
