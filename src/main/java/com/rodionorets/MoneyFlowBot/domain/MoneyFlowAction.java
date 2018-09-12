@@ -17,6 +17,12 @@ public class MoneyFlowAction {
 
     private String actionType;
 
+    public MoneyFlowAction(Builder builder) {
+        this.telegramUserId = builder.telegramUserId;
+        this.amount = builder.amount;
+        this.actionType = builder.actionType;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -31,5 +37,32 @@ public class MoneyFlowAction {
 
     public String getActionType() {
         return actionType;
+    }
+
+    public static class Builder {
+        private Integer telegramUserId;
+
+        private BigDecimal amount;
+
+        private String actionType;
+
+        public MoneyFlowAction build() {
+            return new MoneyFlowAction(this);
+        }
+
+        public Builder withTelegramUserId(Integer telegramUserId) {
+            this.telegramUserId = telegramUserId;
+            return this;
+        }
+
+        public Builder withAmount(BigDecimal amount) {
+            this.amount = amount;
+            return this;
+        }
+
+        public Builder withActionType(String actionType) {
+            this.actionType = actionType;
+            return this;
+        }
     }
 }
