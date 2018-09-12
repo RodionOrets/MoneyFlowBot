@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Collection;
 
 @Repository("moneyFlowActionRepository")
-public interface MoneyFlowActionsRepository extends MongoRepository<MoneyFlowAction, Integer> {
+public interface MoneyFlowActionsRepository extends MongoRepository<MoneyFlowAction, Integer>, CustomMoneyFlowActionsRepository {
 
     Collection<MoneyFlowAction> findAllByTelegramUserId(Integer telegramUsedId);
 
