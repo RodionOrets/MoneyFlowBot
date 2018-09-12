@@ -6,6 +6,12 @@ import org.springframework.stereotype.Service;
 @Service("applicationCommandCache")
 public class ApplicationCommandCache {
 
+    /* TODO(5): Implement ApplicationCommandCache in order to track what is the current or last action processed
+    *  TODO(5): Consider saving transactions state for "AddXXXActionProcessor" so user can "say" things to bot by chunks
+    *  TODO(5): So here we have: 1. Last Action (Expense, Income, etc.); 2. Last Action info (amount, description, etc.)
+     */
+
+    // TODO(6): Implement ApplicationCommandCache#clear
     public void clear() {
 
     }
