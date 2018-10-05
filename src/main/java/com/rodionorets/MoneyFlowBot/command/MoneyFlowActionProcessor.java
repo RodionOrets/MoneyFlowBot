@@ -1,12 +1,10 @@
 package com.rodionorets.MoneyFlowBot.command;
 
-import com.rodionorets.MoneyFlowBot.bot.MoneyFlowBot;
 import com.rodionorets.MoneyFlowBot.util.telegram.ApiMethodExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.telegram.telegrambots.api.methods.BotApiMethod;
 import org.telegram.telegrambots.api.objects.Update;
-import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import java.io.Serializable;
 

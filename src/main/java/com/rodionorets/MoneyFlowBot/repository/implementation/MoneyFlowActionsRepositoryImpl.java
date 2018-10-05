@@ -3,13 +3,14 @@ package com.rodionorets.MoneyFlowBot.repository.implementation;
 import com.rodionorets.MoneyFlowBot.domain.MoneyFlowAction;
 import com.rodionorets.MoneyFlowBot.repository.CustomMoneyFlowActionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 
+@Repository
 public class MoneyFlowActionsRepositoryImpl implements CustomMoneyFlowActionsRepository {
 
     private final MongoTemplate mongoTemplate;
