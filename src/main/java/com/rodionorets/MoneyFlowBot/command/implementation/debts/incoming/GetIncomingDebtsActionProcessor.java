@@ -3,6 +3,7 @@ package com.rodionorets.MoneyFlowBot.command.implementation.debts.incoming;
 import com.rodionorets.MoneyFlowBot.command.MoneyFlowActionProcessor;
 import com.rodionorets.MoneyFlowBot.domain.ActionTypes;
 import com.rodionorets.MoneyFlowBot.repository.MoneyFlowActionsRepository;
+import com.rodionorets.MoneyFlowBot.util.moneyflowbot.MoneyFlowActionsTotalAmountCalculator;
 import com.rodionorets.MoneyFlowBot.util.moneyflowbot.QueriesAndProcessorNames;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,11 +25,9 @@ public class GetIncomingDebtsActionProcessor extends MoneyFlowActionProcessor {
     public void process() {
         var telegramUserId = update.getInlineQuery().getFrom().getId();
 
-        var totalIncomingDebtsAmount =
-                moneyFlowActionsRepository.findAllByTelegramUserIdAndActions(telegramUserId, List.of(ActionTypes.INCOMING_DEBT))
-                        .stream()
-                        .mapToDouble(action -> action.getAmount().doubleValue())
-                        .sum();
+        var userIncomingDebts = moneyFlowActionsRepository.findAllByTelegramUserIdAndActions(telegramUserId, List.of(ActionTypes.INCOMING_DEBT));
+
+        var totalIncomingDebtsAmount = MoneyFlowActionsTotalAmountCalculator.calculateTotalAmount(userIncomingDebts);
 
         var message = "Your total amount of incoming debts is: " + totalIncomingDebtsAmount;
 

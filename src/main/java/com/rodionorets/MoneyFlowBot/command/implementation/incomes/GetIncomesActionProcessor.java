@@ -3,6 +3,7 @@ package com.rodionorets.MoneyFlowBot.command.implementation.incomes;
 import com.rodionorets.MoneyFlowBot.command.MoneyFlowActionProcessor;
 import com.rodionorets.MoneyFlowBot.domain.ActionTypes;
 import com.rodionorets.MoneyFlowBot.repository.MoneyFlowActionsRepository;
+import com.rodionorets.MoneyFlowBot.util.moneyflowbot.MoneyFlowActionsTotalAmountCalculator;
 import com.rodionorets.MoneyFlowBot.util.moneyflowbot.QueriesAndProcessorNames;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,11 +25,9 @@ public class GetIncomesActionProcessor extends MoneyFlowActionProcessor {
     public void process() {
         var telegramUserId = update.getInlineQuery().getFrom().getId();
 
-        var totalUserIncomeAmount =
-                moneyFlowActionsRepository.findAllByTelegramUserIdAndActions(telegramUserId, List.of(ActionTypes.INCOME))
-                        .stream()
-                        .mapToDouble(action -> action.getAmount().doubleValue())
-                        .sum();
+        var userIncomes = moneyFlowActionsRepository.findAllByTelegramUserIdAndActions(telegramUserId, List.of(ActionTypes.INCOME));
+
+        var totalUserIncomeAmount = MoneyFlowActionsTotalAmountCalculator.calculateTotalAmount(userIncomes);
 
         String message = "Your total income amount is " + totalUserIncomeAmount;
 
