@@ -9,7 +9,7 @@ import static com.rodionorets.MoneyFlowBot.util.moneyflowbot.QueriesAndProcessor
 @Component("processorNameResolver")
 public class ProcessorNameResolver {
 
-    private Map<String, String> queryToProcessorNames = Map
+    private final Map<String, String> queryToProcessorNames = Map
             .of(
                     Balance.GET_BALANCE_INLINE_QUERY, Balance.GET_BALANCE_ACTION_PROCESSOR_NAME,
                     Incomes.GET_INCOMES_INLINE_QUERY, Incomes.GET_INCOMES_ACTION_PROCESSOR_NAME,
