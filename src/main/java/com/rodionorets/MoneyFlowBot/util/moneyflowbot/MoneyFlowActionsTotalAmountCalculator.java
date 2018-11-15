@@ -2,12 +2,14 @@ package com.rodionorets.MoneyFlowBot.util.moneyflowbot;
 
 import com.rodionorets.MoneyFlowBot.domain.MoneyFlowAction;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 
 public class MoneyFlowActionsTotalAmountCalculator {
-    public static double calculateTotalAmount(Collection<MoneyFlowAction> actions) {
+    public static BigDecimal calculateTotalAmount(Collection<MoneyFlowAction> actions) {
         return actions.stream()
-                .mapToDouble(action -> action.getAmount().doubleValue())
-                .sum();
+                .map(MoneyFlowAction::getAmount)
+                .reduce(BigDecimal::add)
+                .get();
     }
 }
