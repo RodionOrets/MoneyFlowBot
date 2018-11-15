@@ -2,11 +2,14 @@ package com.rodionorets.MoneyFlowBot.command.implementation.balance;
 
 import com.rodionorets.MoneyFlowBot.command.MoneyFlowActionProcessor;
 import com.rodionorets.MoneyFlowBot.domain.ActionTypes;
+import com.rodionorets.MoneyFlowBot.domain.MoneyFlowAction;
 import com.rodionorets.MoneyFlowBot.repository.MoneyFlowActionsRepository;
 import com.rodionorets.MoneyFlowBot.util.moneyflowbot.QueriesAndProcessorNames;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
+
+import java.math.BigDecimal;
 
 @Service(QueriesAndProcessorNames.Balance.GET_BALANCE_ACTION_PROCESSOR_NAME)
 public class GetBalanceActionProcessor extends MoneyFlowActionProcessor {
@@ -21,30 +24,34 @@ public class GetBalanceActionProcessor extends MoneyFlowActionProcessor {
     @Override
     public void process() {
         var telegramUserId = update.getInlineQuery().getFrom().getId();
-        var userActions = moneyFlowActionsRepository.findAllByTelegramUserId(telegramUserId);
 
-        var userBalance = userActions.stream()
-                .filter(action -> action.getActionType().equals(ActionTypes.INCOME) || action.getActionType().equals(ActionTypes.EXPENSE))
-                .mapToDouble(action -> action.getAmount().doubleValue())
-                .sum();
+        var actions = moneyFlowActionsRepository.findAllByTelegramUserId(telegramUserId);
 
-        var userDebtsStream = userActions.stream()
-                .filter(action -> action.getActionType().equals(ActionTypes.INCOMING_DEBT) || action.getActionType().equals(ActionTypes.OUTGOING_DEBT));
+        BigDecimal balance = BigDecimal.ZERO;
+        BigDecimal incomingDebts = BigDecimal.ZERO;
+        BigDecimal outgoingDebts = BigDecimal.ZERO;
 
-        var incomingDebtsSum = userDebtsStream
-                .filter(action -> action.getActionType().equals(ActionTypes.INCOMING_DEBT))
-                .mapToDouble(action -> action.getAmount().doubleValue())
-                .sum();
+        for (MoneyFlowAction action : actions) {
+            String actionType = action.getActionType();
 
-        var outgoingDebtsSum = userDebtsStream
-                .filter(action -> action.getActionType().equals(ActionTypes.OUTGOING_DEBT))
-                .mapToDouble(action -> action.getAmount().doubleValue())
-                .sum();
+            switch (actionType) {
+                case ActionTypes.INCOME:
+                case ActionTypes.EXPENSE:
+                    balance = balance.add(action.getAmount());
+                    break;
+                case ActionTypes.INCOMING_DEBT:
+                    incomingDebts = incomingDebts.add(action.getAmount());
+                    break;
+                case ActionTypes.OUTGOING_DEBT:
+                    outgoingDebts = outgoingDebts.add(action.getAmount());
+                    break;
+            }
+        }
 
         String message =
-                "Your total balance is: " + userBalance +
-                "\nAmount of your incoming debts: " + incomingDebtsSum +
-                "\nAmount of your outgoing debts: " + outgoingDebtsSum;
+                "Your total balance is: " + balance +
+                "\nAmount of your incoming debts: " + incomingDebts +
+                "\nAmount of your outgoing debts: " + outgoingDebts;
 
         SendMessage sendMessage = new SendMessage()
                 .setText(message);
