@@ -53,8 +53,7 @@ public class GetBalanceActionProcessor extends MoneyFlowActionProcessor {
                 "\nAmount of your incoming debts: " + incomingDebts +
                 "\nAmount of your outgoing debts: " + outgoingDebts;
 
-        SendMessage sendMessage = new SendMessage()
-                .setText(message);
+        SendMessage sendMessage = new SendMessage().setText(message);
 
         executeApiMethod(sendMessage);
     }

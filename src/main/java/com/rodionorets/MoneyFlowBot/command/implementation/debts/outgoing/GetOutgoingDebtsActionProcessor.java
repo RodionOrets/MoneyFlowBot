@@ -25,9 +25,9 @@ public class GetOutgoingDebtsActionProcessor extends MoneyFlowActionProcessor {
     public void process() {
         var telegramUserId = update.getInlineQuery().getFrom().getId();
 
-        var userOutgoingDebts = moneyFlowActionsRepository.findAllByTelegramUserIdAndActions(telegramUserId, List.of(ActionTypes.OUTGOING_DEBT));
+        var outgoingDebts = moneyFlowActionsRepository.findAllByTelegramUserIdAndActions(telegramUserId, List.of(ActionTypes.OUTGOING_DEBT));
 
-        var totalOutgoingDebtsAmount = MoneyFlowActionsTotalAmountCalculator.calculateTotalAmount(userOutgoingDebts);
+        var totalOutgoingDebtsAmount = MoneyFlowActionsTotalAmountCalculator.calculateTotalAmount(outgoingDebts);
 
         var message = "Your total amount of outgoing debts is: " + totalOutgoingDebtsAmount;
 

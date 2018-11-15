@@ -25,11 +25,11 @@ public class GetIncomesActionProcessor extends MoneyFlowActionProcessor {
     public void process() {
         var telegramUserId = update.getInlineQuery().getFrom().getId();
 
-        var userIncomes = moneyFlowActionsRepository.findAllByTelegramUserIdAndActions(telegramUserId, List.of(ActionTypes.INCOME));
+        var incomes = moneyFlowActionsRepository.findAllByTelegramUserIdAndActions(telegramUserId, List.of(ActionTypes.INCOME));
 
-        var totalUserIncomeAmount = MoneyFlowActionsTotalAmountCalculator.calculateTotalAmount(userIncomes);
+        var totalIncomeAmount = MoneyFlowActionsTotalAmountCalculator.calculateTotalAmount(incomes);
 
-        String message = "Your total income amount is " + totalUserIncomeAmount;
+        String message = "Your total income amount is " + totalIncomeAmount;
 
         SendMessage sendMessage = new SendMessage().setText(message);
 
