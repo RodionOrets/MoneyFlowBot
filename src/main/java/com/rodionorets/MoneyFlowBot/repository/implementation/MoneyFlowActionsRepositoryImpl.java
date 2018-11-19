@@ -1,6 +1,6 @@
 package com.rodionorets.MoneyFlowBot.repository.implementation;
 
-import com.rodionorets.MoneyFlowBot.domain.MoneyFlowAction;
+import com.rodionorets.MoneyFlowBot.entity.MoneyFlowAction;
 import com.rodionorets.MoneyFlowBot.repository.CustomMoneyFlowActionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;

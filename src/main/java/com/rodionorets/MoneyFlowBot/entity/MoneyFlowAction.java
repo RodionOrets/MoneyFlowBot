@@ -1,4 +1,4 @@
-package com.rodionorets.MoneyFlowBot.domain;
+package com.rodionorets.MoneyFlowBot.entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

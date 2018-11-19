@@ -1,4 +1,4 @@
-package com.rodionorets.MoneyFlowBot.util.moneyflowbot;
+package com.rodionorets.MoneyFlowBot.constants.application;
 
 // TODO (1-1): Consider bean naming violation so I can go without this class and resolve processor names using inline query only
 public final class QueriesAndProcessorNames {

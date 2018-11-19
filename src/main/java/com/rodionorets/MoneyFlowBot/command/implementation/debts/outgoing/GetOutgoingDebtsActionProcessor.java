@@ -1,10 +1,10 @@
 package com.rodionorets.MoneyFlowBot.command.implementation.debts.outgoing;
 
 import com.rodionorets.MoneyFlowBot.command.MoneyFlowActionProcessor;
-import com.rodionorets.MoneyFlowBot.domain.ActionTypes;
+import com.rodionorets.MoneyFlowBot.entity.ActionTypes;
 import com.rodionorets.MoneyFlowBot.repository.MoneyFlowActionsRepository;
-import com.rodionorets.MoneyFlowBot.util.moneyflowbot.MoneyFlowActionsTotalAmountCalculator;
-import com.rodionorets.MoneyFlowBot.util.moneyflowbot.QueriesAndProcessorNames;
+import com.rodionorets.MoneyFlowBot.service.MoneyFlowActionsTotalAmountCalculator;
+import com.rodionorets.MoneyFlowBot.constants.application.QueriesAndProcessorNames;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.api.methods.send.SendMessage;

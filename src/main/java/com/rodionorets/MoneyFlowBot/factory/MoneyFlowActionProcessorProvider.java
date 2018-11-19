@@ -1,55 +1,46 @@
 package com.rodionorets.MoneyFlowBot.factory;
 
-import com.rodionorets.MoneyFlowBot.cache.ApplicationCommandCache;
-import com.rodionorets.MoneyFlowBot.command.MoneyFlowActionProcessor;
-import com.rodionorets.MoneyFlowBot.util.moneyflowbot.ProcessorNameResolver;
+import com.rodionorets.MoneyFlowBot.cache.ApplicationCache;
+import com.rodionorets.MoneyFlowBot.constants.application.BeanNames;
+import com.rodionorets.MoneyFlowBot.constants.application.ProcessorType;
+import com.rodionorets.MoneyFlowBot.service.UpdateProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.api.objects.Update;
-
-import static com.rodionorets.MoneyFlowBot.util.moneyflowbot.QueriesAndProcessorNames.General.UNKNOWN_ACTION_PROCESSOR_NAME;
+import org.telegram.telegrambots.api.objects.inlinequery.InlineQuery;
 
 @Service("moneyFlowActionProvider")
 public class MoneyFlowActionProcessorProvider {
 
     private final ApplicationContext applicationContext;
 
-    private final ApplicationCommandCache applicationCommandCache;
-
-    private final ProcessorNameResolver processorNameResolver;
-
     @Autowired
-    public MoneyFlowActionProcessorProvider(
-            ApplicationContext applicationContext,
-            @Qualifier("applicationCommandCache") ApplicationCommandCache applicationCommandCache,
-            @Qualifier("processorNameResolver") ProcessorNameResolver processorNameResolver) {
+    public MoneyFlowActionProcessorProvider(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
-        this.applicationCommandCache = applicationCommandCache;
-        this.processorNameResolver = processorNameResolver;
     }
 
-    public MoneyFlowActionProcessor getProcessor(Update update) {
+    public UpdateProcessor getProcessor(Update update) {
+        ProcessorType processorType = ProcessorType.DEFAULT;
+
         if (update.hasInlineQuery()) {
-            applicationCommandCache.clear();
-            return getProcessorForUpdateWithInlineQuery(update);
+            processorType = getInlineQueryProcessor(update.getInlineQuery());
         } else if (update.hasMessage()) {
-            return null;
-        } else {
-            return resolveProcessorFromContext(UNKNOWN_ACTION_PROCESSOR_NAME);
+            processorType = ProcessorType.MESSAGE_PROCESSOR;
         }
+
+        return resolveProcessorFromContext(processorType.getProcessorTypeString());
     }
 
-    private MoneyFlowActionProcessor getProcessorForUpdateWithInlineQuery(Update update) {
-        var query = update.getInlineQuery().getQuery();
-        var processorBeanName = processorNameResolver.resolveByQuery(query);
-        return resolveProcessorFromContext(processorBeanName)
-                .withUpdate(update);
+    private ProcessorType getInlineQueryProcessor(InlineQuery inlineQuery) {
+        return inlineQuery.getQuery().startsWith("/get")
+                ? ProcessorType.INLINE_QUERY_GET_PROCESSOR
+                : ProcessorType.INLINE_QUERY_ADD_PROCESSOR;
     }
 
-    private MoneyFlowActionProcessor resolveProcessorFromContext(String processorBeanName) {
-        return MoneyFlowActionProcessor.class
+    private UpdateProcessor resolveProcessorFromContext(String processorBeanName) {
+        return UpdateProcessor.class
                 .cast(applicationContext.getAutowireCapableBeanFactory().getBean(processorBeanName));
     }
 }

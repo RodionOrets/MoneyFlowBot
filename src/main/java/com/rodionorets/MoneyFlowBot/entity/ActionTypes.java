@@ -1,4 +1,4 @@
-package com.rodionorets.MoneyFlowBot.domain;
+package com.rodionorets.MoneyFlowBot.entity;
 
 public final class ActionTypes {
     private ActionTypes() {}
