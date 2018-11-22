@@ -1,7 +1,7 @@
 package com.rodionorets.MoneyFlowBot.command.implementation;
 
 import com.rodionorets.MoneyFlowBot.command.MoneyFlowActionProcessor;
-import com.rodionorets.MoneyFlowBot.constants.ActionTypes;
+import com.rodionorets.MoneyFlowBot.constants.MoneyFlowActionTypeStrings;
 import com.rodionorets.MoneyFlowBot.repository.MoneyFlowActionsRepository;
 import com.rodionorets.MoneyFlowBot.util.moneyflowbot.MoneyFlowActionsTotalAmountCalculator;
 import com.rodionorets.MoneyFlowBot.constants.QueriesAndProcessorNames;
@@ -25,7 +25,7 @@ public class GetOutgoingDebtsActionProcessor extends MoneyFlowActionProcessor {
     public void process() {
         var telegramUserId = update.getInlineQuery().getFrom().getId();
 
-        var outgoingDebts = moneyFlowActionsRepository.findAllByTelegramUserIdAndActions(telegramUserId, List.of(ActionTypes.OUTGOING_DEBT));
+        var outgoingDebts = moneyFlowActionsRepository.findAllByTelegramUserIdAndActions(telegramUserId, List.of(MoneyFlowActionTypeStrings.OUTGOING_DEBT));
 
         var totalOutgoingDebtsAmount = MoneyFlowActionsTotalAmountCalculator.calculateTotalAmount(outgoingDebts);
 

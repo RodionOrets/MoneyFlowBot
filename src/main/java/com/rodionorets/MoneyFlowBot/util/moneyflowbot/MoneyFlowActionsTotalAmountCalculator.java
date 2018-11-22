@@ -1,6 +1,6 @@
 package com.rodionorets.MoneyFlowBot.util.moneyflowbot;
 
-import com.rodionorets.MoneyFlowBot.domain.MoneyFlowAction;
+import com.rodionorets.MoneyFlowBot.entity.MoneyFlowAction;
 
 import java.math.BigDecimal;
 import java.util.Collection;

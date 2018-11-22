@@ -3,7 +3,7 @@ package com.rodionorets.MoneyFlowBot.util.moneyflowbot;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
-import static com.rodionorets.MoneyFlowBot.util.moneyflowbot.QueriesAndProcessorNames.*;
+import static com.rodionorets.MoneyFlowBot.constants.QueriesAndProcessorNames.*;
 
 // TODO (1-2): Consider bean naming violation so I can go without this class and resolve processor names using inline query only
 @Component("processorNameResolver")

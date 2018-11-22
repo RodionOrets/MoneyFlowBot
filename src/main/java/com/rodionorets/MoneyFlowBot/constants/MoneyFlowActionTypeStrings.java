@@ -1,7 +1,7 @@
-package com.rodionorets.MoneyFlowBot.domain;
+package com.rodionorets.MoneyFlowBot.constants;
 
-public final class ActionTypes {
-    private ActionTypes() {}
+public final class MoneyFlowActionTypeStrings {
+    private MoneyFlowActionTypeStrings() {}
 
     public static final String INCOME = "Income";
     public static final String EXPENSE = "Expense";

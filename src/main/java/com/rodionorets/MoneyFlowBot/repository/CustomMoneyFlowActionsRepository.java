@@ -1,6 +1,6 @@
 package com.rodionorets.MoneyFlowBot.repository;
 
-import com.rodionorets.MoneyFlowBot.domain.MoneyFlowAction;
+import com.rodionorets.MoneyFlowBot.entity.MoneyFlowAction;
 
 import java.util.Collection;
 

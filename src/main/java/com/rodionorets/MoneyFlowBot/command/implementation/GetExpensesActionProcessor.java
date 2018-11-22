@@ -1,7 +1,7 @@
 package com.rodionorets.MoneyFlowBot.command.implementation;
 
 import com.rodionorets.MoneyFlowBot.command.MoneyFlowActionProcessor;
-import com.rodionorets.MoneyFlowBot.constants.ActionTypes;
+import com.rodionorets.MoneyFlowBot.constants.MoneyFlowActionTypeStrings;
 import com.rodionorets.MoneyFlowBot.repository.MoneyFlowActionsRepository;
 import com.rodionorets.MoneyFlowBot.util.moneyflowbot.MoneyFlowActionsTotalAmountCalculator;
 import com.rodionorets.MoneyFlowBot.constants.QueriesAndProcessorNames;
@@ -25,7 +25,7 @@ public class GetExpensesActionProcessor extends MoneyFlowActionProcessor {
     public void process() {
         var telegramUserId = update.getInlineQuery().getFrom().getId();
 
-        var expenses = moneyFlowActionsRepository.findAllByTelegramUserIdAndActions(telegramUserId, List.of(ActionTypes.EXPENSE));
+        var expenses = moneyFlowActionsRepository.findAllByTelegramUserIdAndActions(telegramUserId, List.of(MoneyFlowActionTypeStrings.EXPENSE));
 
         var totalExpensesAmount = MoneyFlowActionsTotalAmountCalculator.calculateTotalAmount(expenses);
 

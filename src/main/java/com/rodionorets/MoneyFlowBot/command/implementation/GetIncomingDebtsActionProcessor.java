@@ -1,7 +1,7 @@
 package com.rodionorets.MoneyFlowBot.command.implementation;
 
 import com.rodionorets.MoneyFlowBot.command.MoneyFlowActionProcessor;
-import com.rodionorets.MoneyFlowBot.constants.ActionTypes;
+import com.rodionorets.MoneyFlowBot.constants.MoneyFlowActionTypeStrings;
 import com.rodionorets.MoneyFlowBot.repository.MoneyFlowActionsRepository;
 import com.rodionorets.MoneyFlowBot.util.moneyflowbot.MoneyFlowActionsTotalAmountCalculator;
 import com.rodionorets.MoneyFlowBot.constants.QueriesAndProcessorNames;
@@ -25,14 +25,14 @@ public class GetIncomingDebtsActionProcessor extends MoneyFlowActionProcessor {
     public void process() {
         var telegramUserId = update.getInlineQuery().getFrom().getId();
 
-        var incomingDebts = moneyFlowActionsRepository.findAllByTelegramUserIdAndActions(telegramUserId, List.of(ActionTypes.INCOMING_DEBT));
+        var incomingDebts = moneyFlowActionsRepository.findAllByTelegramUserIdAndActions(telegramUserId, List.of(MoneyFlowActionTypeStrings.INCOMING_DEBT));
 
         var totalIncomingDebtsAmount = MoneyFlowActionsTotalAmountCalculator.calculateTotalAmount(incomingDebts);
 
         var message = "Your total amount of incoming debts is: " + totalIncomingDebtsAmount;
 
         var sendMessage = new SendMessage().setText(message);
-
+        
         executeApiMethod(sendMessage);
     }
 

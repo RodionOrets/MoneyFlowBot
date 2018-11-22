@@ -1,7 +1,7 @@
 package com.rodionorets.MoneyFlowBot.command.implementation;
 
 import com.rodionorets.MoneyFlowBot.command.MoneyFlowActionProcessor;
-import com.rodionorets.MoneyFlowBot.constants.ActionTypes;
+import com.rodionorets.MoneyFlowBot.constants.MoneyFlowActionTypeStrings;
 import com.rodionorets.MoneyFlowBot.entity.MoneyFlowAction;
 import com.rodionorets.MoneyFlowBot.repository.MoneyFlowActionsRepository;
 import com.rodionorets.MoneyFlowBot.constants.QueriesAndProcessorNames;
@@ -35,14 +35,14 @@ public class GetBalanceActionProcessor extends MoneyFlowActionProcessor {
             String actionType = action.getActionType();
 
             switch (actionType) {
-                case ActionTypes.INCOME:
-                case ActionTypes.EXPENSE:
+                case MoneyFlowActionTypeStrings.INCOME:
+                case MoneyFlowActionTypeStrings.EXPENSE:
                     balance = balance.add(action.getAmount());
                     break;
-                case ActionTypes.INCOMING_DEBT:
+                case MoneyFlowActionTypeStrings.INCOMING_DEBT:
                     incomingDebts = incomingDebts.add(action.getAmount());
                     break;
-                case ActionTypes.OUTGOING_DEBT:
+                case MoneyFlowActionTypeStrings.OUTGOING_DEBT:
                     outgoingDebts = outgoingDebts.add(action.getAmount());
                     break;
             }
