@@ -1,1 +1,1 @@
-
+Currently development in stopped since I'm not familiar with bots and best practices on how to build them. I already wrote a lot of code and confuse myself a lot of times. Will be continued in future, could be using another technologies (ex. python)
