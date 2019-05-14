@@ -1,7 +1,5 @@
 package com.rodionorets.MoneyFlowBot.factory;
 
-import com.rodionorets.MoneyFlowBot.command.StandaloneUpdateProcessor;
-import com.rodionorets.MoneyFlowBot.util.moneyflowbot.ProcessorNameResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -9,10 +7,13 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import com.rodionorets.MoneyFlowBot.command.TelegramUpdateProcessor;
+import com.rodionorets.MoneyFlowBot.util.moneyflowbot.ProcessorNameResolver;
+
+
 @Service
 public class MoneyFlowCommandProcessorProvider
 {
-
     private final ApplicationContext applicationContext;
 
     private final ProcessorNameResolver processorNameResolver;
@@ -26,9 +27,9 @@ public class MoneyFlowCommandProcessorProvider
         this.processorNameResolver = processorNameResolver;
     }
 
-    public StandaloneUpdateProcessor getProcessor(Update update)
+    public TelegramUpdateProcessor getProcessor(Update update)
     {
-        StandaloneUpdateProcessor processor;
+        TelegramUpdateProcessor processor;
 
         if (update.hasMessage())
         {
@@ -46,19 +47,19 @@ public class MoneyFlowCommandProcessorProvider
         return processor;
     }
 
-    private StandaloneUpdateProcessor getProcessorForUpdateWithCallbackQuery(CallbackQuery callbackQuery)
+    private TelegramUpdateProcessor getProcessorForUpdateWithCallbackQuery(CallbackQuery callbackQuery)
     {
         return getBeanFromContext(processorNameResolver.resolveForCallbackQuery(callbackQuery.getId()));
     }
 
-    private StandaloneUpdateProcessor getProcessorForUpdateWithMessage(Message message)
+    private TelegramUpdateProcessor getProcessorForUpdateWithMessage(Message message)
     {
         return getBeanFromContext(processorNameResolver.resolveForCommand(message.getText()));
     }
 
-    private StandaloneUpdateProcessor getBeanFromContext(String beanName)
+    private TelegramUpdateProcessor getBeanFromContext(String beanName)
     {
-        return StandaloneUpdateProcessor.class
+        return TelegramUpdateProcessor.class
                 .cast(applicationContext.getAutowireCapableBeanFactory().getBean(beanName));
     }
 }
