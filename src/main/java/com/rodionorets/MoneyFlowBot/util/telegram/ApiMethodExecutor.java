@@ -2,13 +2,13 @@ package com.rodionorets.MoneyFlowBot.util.telegram;
 
 import com.rodionorets.MoneyFlowBot.bot.MoneyFlowBot;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.Serializable;
 
-@Service
+@Component
 public class ApiMethodExecutor
 {
     private final MoneyFlowBot moneyFlowBot;
