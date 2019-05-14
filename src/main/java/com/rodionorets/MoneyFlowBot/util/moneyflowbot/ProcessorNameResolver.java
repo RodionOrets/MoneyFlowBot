@@ -10,19 +10,17 @@ public class ProcessorNameResolver
 
     private final Map<String, String> commandProcessors = Map
             .of(
-                    "/start", "startCommandProcessor"
+                "/start", "startCommandProcessor",
+                "/help", "helpCommandProcessor",
+                "/income", "incomeCommandProcessor",
+                "/expense", "expenseCommandProcessor",
+                "/incomes", "incomesCommandProcessor",
+                "/expenses", "expenseCommandProcessor",
+                "/balance", "balanceCommandProcessor"
             );
-
-    private final Map<String, String> callbackQueryProcessors = Map.of();
 
     public String resolveForCommand(String command)
     {
         return commandProcessors.get(command);
     }
-
-    public String resolveForCallbackQuery(String callbackQuery)
-    {
-        return callbackQueryProcessors.get(callbackQuery);
-    }
-
 }
