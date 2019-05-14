@@ -3,11 +3,10 @@ package com.rodionorets.MoneyFlowBot.factory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import com.rodionorets.MoneyFlowBot.command.TelegramUpdateProcessor;
-import com.rodionorets.MoneyFlowBot.util.moneyflowbot.ProcessorNameResolver;
+import com.rodionorets.MoneyFlowBot.util.ProcessorNameResolver;
 
 
 @Component

@@ -1,4 +1,4 @@
-package com.rodionorets.MoneyFlowBot.util.moneyflowbot;
+package com.rodionorets.MoneyFlowBot.util;
 
 import org.springframework.stereotype.Component;
 
