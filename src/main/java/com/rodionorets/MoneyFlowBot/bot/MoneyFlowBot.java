@@ -39,6 +39,6 @@ public class MoneyFlowBot extends TelegramLongPollingBot
     @Override
     public void onUpdateReceived(Update update)
     {
-        updateProcessorProvider.getProcessor(update).process(update);
+        updateProcessorProvider.getForUpdate(update).process(update);
     }
 }

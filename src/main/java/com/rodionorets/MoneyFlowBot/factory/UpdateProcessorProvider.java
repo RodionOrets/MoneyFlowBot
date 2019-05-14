@@ -25,7 +25,7 @@ public class UpdateProcessorProvider
         this.processorNameResolver = processorNameResolver;
     }
 
-    public TelegramUpdateProcessor getProcessor(Update update)
+    public TelegramUpdateProcessor getForUpdate(Update update)
     {
         String processorName;
         if (updateIsCommand(update))
@@ -35,7 +35,7 @@ public class UpdateProcessorProvider
         }
         else if (updateIsCallbackQuery(update))
         {
-            processorName = "";
+            processorName = processorNameResolver.resolveForCallbackData(update.getCallbackQuery().getData());
         }
         else
         {
