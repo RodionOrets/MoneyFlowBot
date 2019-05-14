@@ -1,44 +1,39 @@
 package com.rodionorets.MoneyFlowBot.bot;
 
-import com.rodionorets.MoneyFlowBot.factory.MoneyFlowActionProcessorProvider;
+import com.rodionorets.MoneyFlowBot.factory.MoneyFlowCommandProcessorProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.objects.Update;
 
-@Component("moneyFlowBot")
-public class MoneyFlowBot extends TelegramLongPollingBot {
+@Component
+public class MoneyFlowBot extends TelegramLongPollingBot
+{
+    @Value("${bot.username}")
+    private String botUsername;
 
-    private final String botUsername;
-
-    private final String botToken;
-
-    private final MoneyFlowActionProcessorProvider moneyFlowActionProcessorProvider;
+    @Value("${bot.token}")
+    private String botToken;
 
     @Autowired
-    public MoneyFlowBot(
-            @Value("${bot.username}") String botUsername,
-            @Value("${bot.token}") String botToken,
-            @Qualifier("moneyFlowActionProvider") MoneyFlowActionProcessorProvider moneyFlowActionProcessorProvider) {
-        this.botUsername = botUsername;
-        this.botToken = botToken;
-        this.moneyFlowActionProcessorProvider = moneyFlowActionProcessorProvider;
-    }
+    private MoneyFlowCommandProcessorProvider moneyFlowCommandProcessorProvider;
 
     @Override
-    public String getBotUsername() {
+    public String getBotUsername()
+    {
         return botUsername;
     }
 
     @Override
-    public String getBotToken() {
+    public String getBotToken()
+    {
         return botToken;
     }
 
     @Override
-    public void onUpdateReceived(Update update) {
-        moneyFlowActionProcessorProvider.getProcessor(update).process();
+    public void onUpdateReceived(Update update)
+    {
+        moneyFlowCommandProcessorProvider.getProcessor(update).process(update);
     }
 }
