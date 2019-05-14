@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.Map;
 
-@Component("processorNameResolver")
+@Component
 public class ProcessorNameResolver
 {
     private final Map<String, String> commandProcessors = Collections.unmodifiableMap(Map
