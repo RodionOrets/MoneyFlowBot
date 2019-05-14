@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-// TODO (1-2): Consider bean naming violation so I can go without this class and resolve processor names using inline query only
 @Component("processorNameResolver")
 public class ProcessorNameResolver
 {

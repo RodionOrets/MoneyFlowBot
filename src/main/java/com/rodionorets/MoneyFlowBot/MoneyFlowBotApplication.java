@@ -1,11 +1,8 @@
 package com.rodionorets.MoneyFlowBot;
 
-import com.rodionorets.MoneyFlowBot.bot.MoneyFlowBot;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.telegram.telegrambots.ApiContextInitializer;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
 @SpringBootApplication
 public class MoneyFlowBotApplication
