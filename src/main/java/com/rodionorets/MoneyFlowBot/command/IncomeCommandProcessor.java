@@ -2,6 +2,7 @@ package com.rodionorets.MoneyFlowBot.command;
 
 import com.rodionorets.MoneyFlowBot.model.MoneyFlowAction;
 import com.rodionorets.MoneyFlowBot.repository.ActionRepositoryStub;
+import com.rodionorets.MoneyFlowBot.util.HelpMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
@@ -28,6 +29,11 @@ public class IncomeCommandProcessor implements TelegramUpdateProcessor<SendMessa
         var message = update.getMessage();
 
         var messageTextParts = message.getText().split(" ");
+
+        if (messageTextParts.length == 1)
+        {
+            return new SendMessage().setChatId(message.getChatId()).setText(HelpMessages.INCOME_HELP_MESSAGE);
+        }
 
         var amount = BigDecimal.valueOf(Double.valueOf(messageTextParts[1]));
 

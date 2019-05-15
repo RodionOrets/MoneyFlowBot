@@ -43,11 +43,11 @@ public class MoneyFlowBot extends TelegramLongPollingBot
     @Override
     public void onUpdateReceived(Update update)
     {
-        BotApiMethod<Serializable> method = updateProcessorProvider.getForUpdate(update).process(update);
+        BotApiMethod method = updateProcessorProvider.getForUpdate(update).process(update);
         tryExecuteMethod(method);
     }
 
-    private <T extends Serializable> void tryExecuteMethod(BotApiMethod<T> method)
+    private <T extends Serializable> void tryExecuteMethod(BotApiMethod method)
     {
         try
         {
@@ -55,7 +55,6 @@ public class MoneyFlowBot extends TelegramLongPollingBot
         }
         catch (TelegramApiException e)
         {
-            // TODO (1): Add logging here
             System.out.println(e);
         }
     }
