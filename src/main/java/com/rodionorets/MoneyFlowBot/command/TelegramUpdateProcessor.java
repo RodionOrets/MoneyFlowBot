@@ -3,9 +3,7 @@ package com.rodionorets.MoneyFlowBot.command;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import java.io.Serializable;
-
-public interface TelegramUpdateProcessor
+public interface TelegramUpdateProcessor<T extends BotApiMethod>
 {
-    <T extends Serializable> BotApiMethod<T> process(Update update);
+    T process(Update update);
 }

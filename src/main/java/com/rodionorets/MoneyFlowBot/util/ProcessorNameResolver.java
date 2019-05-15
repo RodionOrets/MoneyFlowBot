@@ -15,7 +15,7 @@ public class ProcessorNameResolver
             "/income", "incomeCommandProcessor",
             "/expense", "expenseCommandProcessor",
             "/incomes", "incomesCommandProcessor",
-            "/expenses", "expenseCommandProcessor",
+            "/expenses", "expensesCommandProcessor",
             "/balance", "balanceCommandProcessor"
         ));
 
