@@ -1,12 +1,17 @@
 package com.rodionorets.MoneyFlowBot.model;
 
+import org.springframework.data.annotation.Id;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class MoneyFlowAction
 {
-    private Integer userId;
+    @Id
+    private Integer id;
+
+    private Integer telegramUserId;
 
     private BigDecimal amount;
 
@@ -16,23 +21,23 @@ public class MoneyFlowAction
 
     private LocalDateTime timestamp;
 
-    public MoneyFlowAction(Integer userId, BigDecimal amount, String action, String category, LocalDateTime timestamp)
+    public MoneyFlowAction(Integer telegramUserId, BigDecimal amount, String action, String category, LocalDateTime timestamp)
     {
-        this.userId = userId;
+        this.telegramUserId = telegramUserId;
         this.amount = amount;
         this.action = action;
         this.category = category;
         this.timestamp = timestamp;
     }
 
-    public Integer getUserId()
+    public Integer getTelegramUserId()
     {
-        return userId;
+        return telegramUserId;
     }
 
-    public void setUserId(Integer userId)
+    public void setUserId(Integer telegramUserId)
     {
-        this.userId = userId;
+        this.telegramUserId = telegramUserId;
     }
 
     public BigDecimal getAmount()
@@ -81,7 +86,7 @@ public class MoneyFlowAction
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MoneyFlowAction moneyFlowAction1 = (MoneyFlowAction) o;
-        return Objects.equals(userId, moneyFlowAction1.userId) &&
+        return Objects.equals(telegramUserId, moneyFlowAction1.telegramUserId) &&
                 Objects.equals(amount, moneyFlowAction1.amount) &&
                 Objects.equals(action, moneyFlowAction1.action) &&
                 Objects.equals(category, moneyFlowAction1.category) &&
@@ -91,6 +96,6 @@ public class MoneyFlowAction
     @Override
     public int hashCode()
     {
-        return Objects.hash(userId, amount, action, category, timestamp);
+        return Objects.hash(telegramUserId, amount, action, category, timestamp);
     }
 }

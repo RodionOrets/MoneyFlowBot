@@ -1,7 +1,6 @@
 package com.rodionorets.MoneyFlowBot.command;
 
-import com.rodionorets.MoneyFlowBot.repository.ActionRepositoryStub;
-import com.rodionorets.MoneyFlowBot.util.DateTimeUtil;
+import com.rodionorets.MoneyFlowBot.repository.JpaActionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -14,12 +13,12 @@ import static com.rodionorets.MoneyFlowBot.util.DateTimeUtil.*;
 @Service
 public class IncomesCommandProcessor implements TelegramUpdateProcessor<SendMessage>
 {
-    private ActionRepositoryStub repositoryStub;
+    private JpaActionRepository actionRepository;
 
     @Autowired
-    public IncomesCommandProcessor(ActionRepositoryStub repositoryStub)
+    public IncomesCommandProcessor(JpaActionRepository actionRepository)
     {
-        this.repositoryStub = repositoryStub;
+        this.actionRepository = actionRepository;
     }
 
     @Override
@@ -29,9 +28,7 @@ public class IncomesCommandProcessor implements TelegramUpdateProcessor<SendMess
 
         var messageTextParts = message.getText().split(" ");
 
-        var incomes = repositoryStub.getActions(message.getFrom().getId())
-                .stream()
-                .filter(a -> a.getAction().equals("INCOME"));
+        var incomes = actionRepository.findByTelegramUserIdAndAction(message.getFrom().getId(), "INCOME");
 
         var answerMessageText = new StringBuilder();
         if (messageTextParts.length == 1)
@@ -47,7 +44,7 @@ public class IncomesCommandProcessor implements TelegramUpdateProcessor<SendMess
         }
         else
         {
-            incomes.filter(a -> a.getCategory().equals(messageTextParts[1]))
+            incomes.stream().filter(a -> a.getCategory().equals(messageTextParts[1]))
                     .forEach(a ->
                             answerMessageText
                                     .append(toNiceTimestampString(a.getTimestamp()))

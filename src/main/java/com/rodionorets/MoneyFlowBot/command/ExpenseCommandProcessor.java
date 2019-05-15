@@ -1,7 +1,7 @@
 package com.rodionorets.MoneyFlowBot.command;
 
 import com.rodionorets.MoneyFlowBot.model.MoneyFlowAction;
-import com.rodionorets.MoneyFlowBot.repository.ActionRepositoryStub;
+import com.rodionorets.MoneyFlowBot.repository.JpaActionRepository;
 import com.rodionorets.MoneyFlowBot.util.HelpMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +14,12 @@ import java.time.LocalDateTime;
 @Service
 public class ExpenseCommandProcessor implements TelegramUpdateProcessor<SendMessage>
 {
-    private ActionRepositoryStub repositoryStub;
+    private JpaActionRepository actionRepository;
 
     @Autowired
-    public ExpenseCommandProcessor(ActionRepositoryStub repositoryStub)
+    public ExpenseCommandProcessor(JpaActionRepository actionRepository)
     {
-        this.repositoryStub = repositoryStub;
+        this.actionRepository = actionRepository;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class ExpenseCommandProcessor implements TelegramUpdateProcessor<SendMess
 
         var action = new MoneyFlowAction(message.getFrom().getId(), amount, "EXPENSE", messageTextParts[2], LocalDateTime.now());
 
-        repositoryStub.addAction(action);
+        actionRepository.save(action);
 
         return new SendMessage().setChatId(message.getChatId()).setText("Recorded");
     }

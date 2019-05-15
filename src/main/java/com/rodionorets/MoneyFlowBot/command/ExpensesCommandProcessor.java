@@ -1,7 +1,6 @@
 package com.rodionorets.MoneyFlowBot.command;
 
-import com.rodionorets.MoneyFlowBot.repository.ActionRepositoryStub;
-import com.rodionorets.MoneyFlowBot.util.DateTimeUtil;
+import com.rodionorets.MoneyFlowBot.repository.JpaActionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -14,12 +13,12 @@ import static com.rodionorets.MoneyFlowBot.util.DateTimeUtil.toNiceTimestampStri
 @Service
 public class ExpensesCommandProcessor implements TelegramUpdateProcessor<SendMessage>
 {
-    private ActionRepositoryStub repositoryStub;
+    private JpaActionRepository actionRepository;
 
     @Autowired
-    public ExpensesCommandProcessor(ActionRepositoryStub repositoryStub)
+    public ExpensesCommandProcessor(JpaActionRepository actionRepository)
     {
-        this.repositoryStub = repositoryStub;
+        this.actionRepository = actionRepository;
     }
 
     public SendMessage process(Update update)
@@ -28,9 +27,7 @@ public class ExpensesCommandProcessor implements TelegramUpdateProcessor<SendMes
 
         var messageTextParts = message.getText().split(" ");
 
-        var incomes = repositoryStub.getActions(message.getFrom().getId())
-                .stream()
-                .filter(a -> a.getAction().equals("EXPENSE"));
+        var incomes = actionRepository.findByTelegramUserIdAndAction(message.getFrom().getId(), "EXPENSE");
 
         var answerMessageText = new StringBuilder();
         if (messageTextParts.length == 1)
@@ -46,7 +43,7 @@ public class ExpensesCommandProcessor implements TelegramUpdateProcessor<SendMes
         }
         else
         {
-            incomes.filter(a -> a.getCategory().equals(messageTextParts[1]))
+            incomes.stream().filter(a -> a.getCategory().equals(messageTextParts[1]))
                     .forEach(a ->
                             answerMessageText
                                     .append(toNiceTimestampString(a.getTimestamp()))

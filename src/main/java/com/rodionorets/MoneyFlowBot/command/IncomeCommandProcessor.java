@@ -1,26 +1,24 @@
 package com.rodionorets.MoneyFlowBot.command;
 
 import com.rodionorets.MoneyFlowBot.model.MoneyFlowAction;
-import com.rodionorets.MoneyFlowBot.repository.ActionRepositoryStub;
+import com.rodionorets.MoneyFlowBot.repository.JpaActionRepository;
 import com.rodionorets.MoneyFlowBot.util.HelpMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Service
 public class IncomeCommandProcessor implements TelegramUpdateProcessor<SendMessage>
 {
-    private ActionRepositoryStub repositoryStub;
+    private JpaActionRepository actionRepository;
 
     @Autowired
-    public IncomeCommandProcessor(ActionRepositoryStub repositoryStub)
+    public IncomeCommandProcessor(JpaActionRepository actionRepository)
     {
-        this.repositoryStub = repositoryStub;
+        this.actionRepository = actionRepository;
     }
 
     @Override
@@ -39,7 +37,7 @@ public class IncomeCommandProcessor implements TelegramUpdateProcessor<SendMessa
 
         var action = new MoneyFlowAction(message.getFrom().getId(), amount, "INCOME", messageTextParts[2], LocalDateTime.now());
 
-        repositoryStub.addAction(action);
+        actionRepository.save(action);
 
         return new SendMessage().setChatId(message.getChatId()).setText("Recorded");
     }
