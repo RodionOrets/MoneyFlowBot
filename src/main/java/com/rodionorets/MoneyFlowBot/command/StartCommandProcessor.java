@@ -4,6 +4,7 @@ import com.rodionorets.MoneyFlowBot.util.HelpMessages;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.User;
 
 @Service
 public class StartCommandProcessor implements TelegramUpdateProcessor<SendMessage>
@@ -11,7 +12,7 @@ public class StartCommandProcessor implements TelegramUpdateProcessor<SendMessag
     @Override
     public SendMessage process(Update update)
     {
-        var user = update.getMessage().getFrom();
+        User user = update.getMessage().getFrom();
 
         return new SendMessage()
             .setChatId(update.getMessage().getChatId())

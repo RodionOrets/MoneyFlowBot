@@ -1,10 +1,14 @@
 package com.rodionorets.MoneyFlowBot.command;
 
+import com.rodionorets.MoneyFlowBot.model.MoneyFlowAction;
 import com.rodionorets.MoneyFlowBot.repository.JpaActionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+
+import java.util.List;
 
 import static com.rodionorets.MoneyFlowBot.util.DateTimeUtil.toNiceTimestampString;
 
@@ -22,13 +26,13 @@ public class IncomesCommandProcessor implements TelegramUpdateProcessor<SendMess
     @Override
     public SendMessage process(Update update)
     {
-        var message = update.getMessage();
+        Message message = update.getMessage();
 
-        var messageTextParts = message.getText().split(" ");
+        String[] messageTextParts = message.getText().split(" ");
 
-        var incomes = actionRepository.findByTelegramUserIdAndAction(message.getFrom().getId(), "INCOME");
+        List<MoneyFlowAction> incomes = actionRepository.findByTelegramUserIdAndAction(message.getFrom().getId(), "INCOME");
 
-        var answerMessageText = new StringBuilder();
+        StringBuilder answerMessageText = new StringBuilder();
         if (messageTextParts.length == 1)
         {
             incomes.forEach(a ->

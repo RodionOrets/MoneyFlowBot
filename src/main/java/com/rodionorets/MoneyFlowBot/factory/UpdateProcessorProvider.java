@@ -29,7 +29,7 @@ public class UpdateProcessorProvider
         String processorName;
         if (updateIsCommand(update))
         {
-            var command = update.getMessage().getText().split(" ")[0];
+            String command = update.getMessage().getText().split(" ")[0];
             processorName = processorNameResolver.resolveForCommand(command);
         }
         else if (updateIsCallbackQuery(update))
