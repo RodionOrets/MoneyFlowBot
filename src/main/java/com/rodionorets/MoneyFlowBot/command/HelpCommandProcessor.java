@@ -13,7 +13,8 @@ public class HelpCommandProcessor implements TelegramUpdateProcessor<SendMessage
     public SendMessage process(Update update)
     {
         return new SendMessage()
-                .setChatId(update.getMessage().getChatId())
-                .setText(HelpMessages.GLOBAL_HELP_MESSAGE);
+            .setChatId(update.getMessage().getChatId())
+            .setParseMode("markdown")
+            .setText(HelpMessages.GLOBAL_HELP_MESSAGE);
     }
 }

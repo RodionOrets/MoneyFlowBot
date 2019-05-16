@@ -16,7 +16,8 @@ public class ProcessorNameResolver
             "/expense", "expenseCommandProcessor",
             "/incomes", "incomesCommandProcessor",
             "/expenses", "expensesCommandProcessor",
-            "/balance", "balanceCommandProcessor"
+            "/balance", "balanceCommandProcessor",
+            "/reset", "resetCommandProcessor"
         ));
 
     private final Map<String, String> callbackDataProcessors = Collections.unmodifiableMap(Map

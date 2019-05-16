@@ -39,6 +39,6 @@ public class IncomeCommandProcessor implements TelegramUpdateProcessor<SendMessa
 
         actionRepository.save(action);
 
-        return new SendMessage().setChatId(message.getChatId()).setText("Recorded");
+        return new SendMessage().setChatId(message.getChatId()).setText("Your income has been logged.");
     }
 }

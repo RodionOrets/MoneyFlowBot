@@ -12,4 +12,6 @@ public interface JpaActionRepository extends MongoRepository<MoneyFlowAction, In
     List<MoneyFlowAction> findByTelegramUserIdAndAction(Integer telegramUserId, String action);
 
     List<MoneyFlowAction> findByTelegramUserIdAndActionAndCategory(Integer telegramUserId, String action, String category);
+
+    void deleteAllByTelegramUserId(Integer telegramUserId);
 }

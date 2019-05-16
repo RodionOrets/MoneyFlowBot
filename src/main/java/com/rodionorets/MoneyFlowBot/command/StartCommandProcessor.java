@@ -14,8 +14,8 @@ public class StartCommandProcessor implements TelegramUpdateProcessor<SendMessag
         var user = update.getMessage().getFrom();
 
         return new SendMessage()
-                .setChatId(update.getMessage().getChatId())
-                .setParseMode("markdown")
-                .setText(HelpMessages.startMessageFor(user));
+            .setChatId(update.getMessage().getChatId())
+            .setParseMode("markdown")
+            .setText(HelpMessages.startMessageFor(user));
     }
 }

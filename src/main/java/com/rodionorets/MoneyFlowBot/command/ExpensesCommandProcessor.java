@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import java.time.LocalDateTime;
-
 import static com.rodionorets.MoneyFlowBot.util.DateTimeUtil.toNiceTimestampString;
 
 @Service
@@ -33,23 +31,22 @@ public class ExpensesCommandProcessor implements TelegramUpdateProcessor<SendMes
         if (messageTextParts.length == 1)
         {
             incomes.forEach(a ->
-                    answerMessageText
-                            .append(toNiceTimestampString(a.getTimestamp()))
-                            .append(" : ")
-                            .append(a.getAmount())
-                            .append(" : ")
-                            .append(a.getCategory())
-                            .append("\n"));
-        }
-        else
+                answerMessageText
+                    .append(toNiceTimestampString(a.getTimestamp()))
+                    .append(" : ")
+                    .append(a.getAmount())
+                    .append(" : ")
+                    .append(a.getCategory())
+                    .append("\n"));
+        } else
         {
             incomes.stream().filter(a -> a.getCategory().equals(messageTextParts[1]))
-                    .forEach(a ->
-                            answerMessageText
-                                    .append(toNiceTimestampString(a.getTimestamp()))
-                                    .append(" : ")
-                                    .append(a.getAmount())
-                                    .append("\n"));
+                .forEach(a ->
+                    answerMessageText
+                        .append(toNiceTimestampString(a.getTimestamp()))
+                        .append(" : ")
+                        .append(a.getAmount())
+                        .append("\n"));
         }
 
         return new SendMessage().setChatId(message.getChatId()).setText(answerMessageText.toString());

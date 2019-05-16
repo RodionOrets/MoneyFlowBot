@@ -40,6 +40,6 @@ public class ExpenseCommandProcessor implements TelegramUpdateProcessor<SendMess
 
         actionRepository.save(action);
 
-        return new SendMessage().setChatId(message.getChatId()).setText("Recorded");
+        return new SendMessage().setChatId(message.getChatId()).setText("Your expense has been saved.");
     }
 }
